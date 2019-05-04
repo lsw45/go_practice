@@ -26,4 +26,23 @@ func main() {
 		// 打印解码完成的数据
 		fmt.Println(string(data))
 	}
+
+	encodeAndDecode()
+}
+
+func encodeAndDecode() {
+	src := []byte("Away from keyboard.")
+	maxLen := base64.StdEncoding.EncodedLen(len(src))
+	dst := make([]byte, maxLen)
+	base64.StdEncoding.Encode(dst, src)
+	fmt.Println("Encode:", dst)
+
+	src = []byte("dGhpcyBpcyBhIHRlc3Qgc3RyaW5nLg==")
+	maxLen = base64.StdEncoding.EncodedLen(len(src))
+	n, err := base64.StdEncoding.Decode(dst, src)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Decode:", n)
+	fmt.Println("Decode:", dst)
 }
