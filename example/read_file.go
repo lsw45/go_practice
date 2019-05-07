@@ -15,6 +15,9 @@ func check(e error) {
 }
 
 func main() {
+	demo()
+	return
+
 	dat, err := ioutil.ReadFile("./temp/dat.txt") //dat []byte
 	check(err)
 	fmt.Print(string(dat) + "\n")
@@ -41,5 +44,25 @@ func main() {
 
 	check(err)
 	fmt.Printf("%d bytes @ %d:%s\n", n3, o3, string(b3))
+}
 
+func demo() {
+	dat, err := ioutil.ReadFile("./temp/dat.txt")
+	check(err)
+	fmt.Printf("read from :%s\n", string(dat))
+
+	f, err := os.Open("./temp/dat.txt")
+	check(err)
+
+	b1 := make([]byte, 10)
+	n1, err := f.Read(b1)
+	check(err)
+	fmt.Printf("read %d bytes:%s\n", n1, string(b1))
+
+	o2, err := f.Seek(5, 0)
+	check(err)
+	b2 := make([]byte, 10)
+	n2, err := f.Read(b2)
+	check(err)
+	fmt.Printf("read %d bytes @ %d:%s\n", n2, o2, b2)
 }
