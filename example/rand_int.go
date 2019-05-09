@@ -40,3 +40,7 @@ func main() {
 	fmt.Print(r3.Intn(100), ",")
 	fmt.Print(r3.Intn(100))
 }
+
+func randTest() {
+
+}

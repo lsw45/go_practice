@@ -49,5 +49,4 @@ func urlParse() {
 	fmt.Println(u.Path)                     // /web/
 	fmt.Println(u.Fragment)                 // /file/recent/note/1f41f1a02252a3258e70fef5d6ade7ed/
 	fmt.Println(url.ParseQuery(u.RawQuery)) // map[] <nil>
-
 }
