@@ -10,6 +10,7 @@ import (
 func main() {
 
 	// 对 os.Stdin 使用一个带缓冲的 scanner，让我们可以直接使用方便的 Scan 方法来直接读取一行，每次调用该方法可以让 scanner 读取下一行。
+	// bufio.NewScanner的参数是*os.File类型
 	scanner := bufio.NewScanner(os.Stdin)
 
 	// Text 返回当前的 token，现在是输入的下一行。
