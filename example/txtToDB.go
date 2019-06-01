@@ -1,3 +1,11 @@
+package main
+
+import (
+	"errors"
+	"fmt"
+	"strings"
+)
+
 var (
 	//全局数据管道
 	chanData chan *KfPerson
@@ -76,7 +84,7 @@ func main() {
 				//读到文件末尾时，关闭数据管道（通知其它协程停止对该管道的扫描）
 				if err == io.EOF {
 					//完毕的读取协程+1
-					readingFinished ++
+					readingFinished++
 
 					//读取协程全部完毕时，关闭数据管道
 					if readingFinished > 9 && !chanDataClosed {
@@ -166,10 +174,10 @@ func insertPersons2DB(db *sqlx.DB, kps []*KfPerson) error {
 	/*拼接每个开房者信息到SQL语句中*/
 	for _, kp := range kps {
 		/*
-		根据做一些必要的数据处理
-		//对姓名字段去头尾空格
-		//滤掉姓名超长的数据
-		//其它的数据处理
+			根据做一些必要的数据处理
+			//对姓名字段去头尾空格
+			//滤掉姓名超长的数据
+			//其它的数据处理
 		*/
 		kp.Name = strings.TrimSpace(kp.Name)
 		if len(kp.Name) > 20 {

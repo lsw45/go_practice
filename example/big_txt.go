@@ -50,7 +50,7 @@ func main031() {
 		pMap[id] = &province
 
 		//为每个省份关联一个预备写入的数据文件
-		file, _ := os.OpenFile(`D:\GoIP\腾讯课堂公开课2019\数据\`+province.Name+".txt", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+		file, _ := os.OpenFile(`D:\workspace\go_workspace\go_practise\`+province.Name+".txt", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 		province.File = file
 		defer file.Close()
 
@@ -74,7 +74,7 @@ func main031() {
 	}
 
 	/*主协程读入数据，将不同省份的记录丢入对应的管道*/
-	file, _ := os.Open(`D:\GoIP\腾讯课堂公开课2019\数据\kaifang_good.txt`)
+	file, _ := os.Open(`D:\workspace\go_workspace\go_practise\README.md`)
 	defer file.Close()
 
 	//创建缓冲读取器
