@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go_code/softwaredev/customer/code/view"
+	"customer/code/view"
 )
 
 func main() {
