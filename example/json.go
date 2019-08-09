@@ -16,6 +16,20 @@ type Response2 struct {
 
 func main() {
 
+	b := []byte(`{
+	    "Title": "Go语言编程",
+	    "Authors": ["XuShiwei", "HughLv", "Pandaman", "GuaguaSong", "HanTuo", "BertYuan",
+	    "XuDaoli"],
+	    "Publisher": "ituring.com.cn",
+	    "IsPublished": true,
+	    "Price": 9.99,
+	    "Sales": 1000000
+	}`)
+	var r interface{}
+	json.Unmarshal(b, &r)
+	fmt.Println(r)
+	os.Exit(2)
+
 	// 首先我们来看一下基本数据类型到 JSON 字符串的编码过程。
 	// 这里是一些原子值的例子。
 	bolB, _ := json.Marshal(true)
