@@ -1,0 +1,27 @@
+数据块大小= 15
+下一次读取的块序列号= 0
+下一次写入的块序列号= 0
+Read get lock
+eof:Read release lock
+Write get lock
+Write signal
+Write release lock
+wsn, err= 0 <nil>
+eof:Read get lock
+Read release lock
+rsn, data, err= 0 明月几时有 <nil>
+Write get lock
+Write signal
+Write release lock
+wsn, err= 1 <nil>
+Read get lock
+Read release lock
+rsn, data, err= 1 把酒问青天 <nil>
+Write get lock
+Write signal
+Write release lock
+wsn, err= 2 <nil>
+Read get lock
+Read release lock
+rsn, data, err= 2 不知天上宫 <nil>
+main over

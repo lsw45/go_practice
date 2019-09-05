@@ -13,9 +13,9 @@ import (
 type Province struct {
 	//省的Id（身份证号的前两位）
 	Id string
-
 	//省份名称
 	Name string
+	Age  int
 
 	//省份对应的文件
 	File *os.File
@@ -28,6 +28,11 @@ type Province struct {
 var (
 	wg sync.WaitGroup
 )
+
+func main() {
+	var pro = new(Province)
+	fmt.Println(pro)
+}
 
 func main031() {
 
