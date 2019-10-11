@@ -65,4 +65,7 @@ func demo() {
 	n2, err := f.Read(b2)
 	check(err)
 	fmt.Printf("read %d bytes @ %d:%s\n", n2, o2, b2)
+
+	r4 := bufio.NewReader(f)
+	r4.Seek()
 }

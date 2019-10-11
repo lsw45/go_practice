@@ -15,9 +15,9 @@ func main() {
 			log.Println(err)
 			return
 		}
-		for k := range v {
+		for k, v1 := range v {
 			if k != "Title" {
-				v[k] = nil, false
+				v[k] = v1
 			}
 		}
 		if err := enc.Encode(&v); err != nil {

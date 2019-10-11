@@ -38,4 +38,22 @@ func main() {
 
 	wait.Wait()
 
+	lockAndR()
+}
+
+func lockAndR() {
+	mutex := &sync.RWMutex{}
+	var a int
+	mutex.Lock()
+	a = 4
+	fmt.Println("Lock:", a)
+	go func() {
+		mutex.RLock()
+		a = 10
+		fmt.Println("RLock:", a)
+		mutex.RUnlock()
+	}()
+	time.Sleep(time.Second * 2)
+	mutex.Unlock()
+	time.Sleep(time.Second * 1)
 }
