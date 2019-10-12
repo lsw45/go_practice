@@ -8,7 +8,7 @@ import (
 )
 
 func TestIndex(t *testing.T) {
-	// timeFormat()
+	timeFormat()
 	// timeLocation()
 	// timeUnix()
 	// timeDuration()

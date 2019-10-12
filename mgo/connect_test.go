@@ -11,6 +11,7 @@ import (
 var db *mgo.Database
 var session *mgo.Session
 
+// mongodb://angrycard:angrycard@114.80.87.245:27019/angrycard", 100*time.Second
 var url = "mongodb://127.0.0.1:27017/local"
 var personCol = "person"
 var logCol = "log"
