@@ -64,7 +64,8 @@ func TestQuery(t *testing.T) {
 	// 查单条
 	result := Person{}
 	if err := col.Find(bson.M{"name": "carey"}).One(&result); err != nil {
-		panic(err)
+		// panic(err)
+		fmt.Println("err:", err)
 	}
 	fmt.Printf("%+v\n", result)
 	// 按id查
@@ -99,8 +100,8 @@ func TestQuery(t *testing.T) {
 	col.Find(bson.M{"$or": []bson.M{bson.M{"name": "carey"}, bson.M{"age": 28}}})
 	fmt.Printf("or:%+v\n", perA)
 
-	// like
-	col.Find(bson.M{"likes": bson.M{"name": "carey"}}).All(&perA)
+	// "$regex"表示字符串匹配，"$options": "$i"表示不区分大小写
+	col.Find(bson.M{"name": bson.M{"$regex": bson.RegEx{Pattern: "/a/", Options: "im"}}}).All(&perA)
 	fmt.Printf("like:%+v\n", perA)
 
 	// 混合查询
