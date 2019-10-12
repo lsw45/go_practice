@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="author" content="slene, Unknown" />
+
+    <meta name="description" content="Beego Web is official blog and documentation website for beego app web framework" />
+    <meta name="keywords" content="Go, golang, beego, API documentation, blog, app web framework">
+    <title>Homepage - beego: simple &amp; powerful Go app framework</title>
+
+<link rel="shortcut icon" href="/static/img/favicon.png" />
+
+
+<script>/* Beego Compress group `lib` begin */</script>
+	<link rel="stylesheet" href="/static_source/css/bootstrap.css?ver=1409586500" />
+	<link rel="stylesheet" href="/static_source/css/bootstrap-theme.css?ver=1409586500" />
+	<link rel="stylesheet" href="/static_source/css/font-awesome.min.css?ver=1409586500" />
+	<link rel="stylesheet" href="/static_source/css/prettify.css?ver=1409586500" />
+	<link rel="stylesheet" href="/static_source/css/select2.css?ver=1409586500" />
+	<script>/* end */</script>
+<!--[if IE 7]>
+<script>/* Beego Compress group `ie7` begin */</script>
+	<link rel="stylesheet" href="/static_source/css/font-awesome-ie7.min.css?ver=1409586500" />
+	<script>/* end */</script>
+<![endif]-->
+<script>/* Beego Compress group `app` begin */</script>
+	<link rel="stylesheet" href="/static_source/css/base.css?ver=1409586500" />
+	<link rel="stylesheet" href="/static_source/css/markdown.css?ver=1409586500" />
+	<link rel="stylesheet" href="/static_source/css/main.css?ver=1409586500" />
+	<script>/* end */</script>
+
+<!--[if lt IE 9]>
+	<script>/* Beego Compress group `ie9` begin */</script>
+	<script type="text/javascript" src="/static_source/js/html5shiv.js?ver=1409586500"></script>
+	<script type="text/javascript" src="/static_source/js/respond.min.js?ver=1409586500"></script>
+	<script>/* end */</script>
+<![endif]-->
+		
+	</head>
+	<body id="front">
+		<noscript>Please enable JavaScript in your browser!</noscript>
+		<div id="wrapper">
+			<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container" data-toggle="clingify">
+        <div class="row">
+            <div class="navbar-header">
+                
+                <a type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="hidden-xs logo" href="/">
+                    <img style="height:32px;width:102px;" src="/static/img/beego_purple.png">
+                </a>
+                <div class="visible-xs text-center">
+                    <a class="navbar-brand" href="/">
+                        Beego
+                    </a>
+                    
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" role="navigation" id="navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Home</a></li>
+                    <li ><a href="/quickstart">Getting started</a></li>
+                    <li ><a href="/community">Community</a></li>
+                    <li ><a href="/docs/intro/">Documentation</a></li>
+                    <li ><a href="/video">Video</a></li>
+                    <li ><a href="/products">Products</a></li>
+                    <li ><a href="/blog">Blog</a></li>
+                </ul>
+                <div class="hidden-sm hidden-xs nav-lang pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-xs btn-default btn-md dropdown-toggle" data-toggle="dropdown">Language:English <i class="caret"></i></button>
+                        <ul class="dropdown-menu">
+                            
+                                <li><a href="javascript::" data-lang="zh-CN" class="lang-changed">简体中文</a></li>
+                            
+                                <li><a href="javascript::" data-lang="ru-RU" class="lang-changed">Russian</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                <div class="hidden-sm hidden-xs nav-github pull-right">
+                    <span rel="show-github" data-user="astaxie" data-repo="beego"></span>
+                    <span rel="show-github" data-user="astaxie" data-repo="beego" data-type="fork"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+			<div id="main">
+				
+<div class="main-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title">
+                    Beego Framework
+                </div>
+                <div class="desc">
+                    An open source framework to build and develop your applications in the Go way
+                </div>
+                <div class="actions">
+                    <a href="/docs/intro/" class="btn btn-lg btn-info">Learn more</a>
+                    <a href="/quickstart" class="btn btn-lg btn-success">Get started!</a>
+                    <span style="position:absolute;margin:10px 0 0 40px;">stable v1.10.0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row home-box">
+        <div class="col-md-8">
+            <h2>Quick Start</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="markdown">
+                        
+                            <p>Download and install</p>
+                            <pre lang="bash"><code>go get github.com/astaxie/beego</code></pre>
+                            <p>Create file <code>hello.go</code></p>
+                            <pre lang="go"><code>package main<br><br>import "github.com/astaxie/beego"<br><br>func TestXX(t *testing.T) {<br>    beego.Run()<br>}</code></pre>
+                        
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="markdown">
+                        
+                            <p>Build and run</p>
+                            <pre lang="bash"><code>go build hello.go<br>./hello</code></pre>
+                            <p>View effects</p>
+                            <p>Open your browser and visit <code>http://localhost:8080</code></p>
+                            <p>Congratulations! You just built your first beego app.</p>
+                            <p>Please see <a href="/docs">Documentation</a> for going further.</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="home-box">
+                <h2>Further Reading</h2>
+                <div class="well markdown">
+                    <ul class="list-unstyled">
+                        
+                            <li><i class="icon-angle-right"></i> <a href="/docs/mvc/controller/router.md">Router and Controller</a></li>
+                            <li><i class="icon-angle-right"></i> <a href="/docs/mvc/model/overview.md">ORM Usage</a></li>
+                            <li><i class="icon-angle-right"></i> <a href="/docs/mvc/view/view.md">Template Usage</a></li>
+                            <li><i class="icon-angle-right"></i> <a href="/docs/examples/">Beego Samples</a></li>
+                            <li><i class="icon-angle-right"></i> <a href="/docs/module/">Optional Advanced Modules</a></li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row home-box">
+        <div class="col-md-12">
+            <h2>Features</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="feature">
+                        <h3 class="title">
+                            
+                                EASY TO USE
+                            
+                        </h3>
+                        <p class="content">
+                            
+                                With RESTful support, MVC model, and use bee tool to build your apps quickly with features including code hot compile, automated testing, and automated packing and deploying.
+                            
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature">
+                        <h3 class="title">
+                            
+                                INTELLIGENT
+                            
+                        </h3>
+                        <p class="content">
+                            
+                                With intelligent routing and monitoring, it's able to monitor your QPS, memory and CPU usages, and goroutine status. It provides you full control of your online apps.
+                            
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature">
+                        <h3 class="title">
+                            
+                                MODULAR
+                            
+                        </h3>
+                        <p class="content">
+                            
+                                With powerful built-in modules including session control, caching, logging, configuration parsing, performance supervising, context handling, ORM supporting, and requests simulating. You get the powerful foundation for any type of applications.
+                            
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="feature">
+                        <h3 class="title">
+                            
+                                HIGH PERFORMANCE
+                            
+                        </h3>
+                        <p class="content">
+                            
+                                With native Go http package to handle the requests and the efficient concurrence of goroutine. Your beego applications can handle massive trafic as beego are doing in many productions.
+                            
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row home-box">
+        <div class="col-md-12">
+            <h2>Our well-known customers</h2>
+            <div class="whouse">
+                <img class="img-thumbnail" src="/static/img/brands/hwclouds.png">
+                <img class="img-thumbnail" src="/static/img/brands/letvcloud.png">
+                <img class="img-thumbnail" src="/static/img/brands/360.png">
+                <img class="img-thumbnail" src="/static/img/brands/youdao.png">
+                <img class="img-thumbnail" src="/static/img/brands/weico.png">
+                <img class="img-thumbnail" src="/static/img/brands/weibo.png">
+                <img class="img-thumbnail" src="/static/img/brands/jd.png">
+                <img class="img-thumbnail" src="/static/img/brands/bmob.png">
+                <a target="_blank" href="http://www.ardanstudios.com/"><img class="img-thumbnail" src="/static/img/brands/ardanstudios.png"></a>
+                <img class="img-thumbnail" src="/static/img/brands/oupeng.png">
+                <img class="img-thumbnail" src="/static/img/brands/meituan.png">
+                <img class="img-thumbnail" src="/static/img/brands/tudou.png">
+                <img class="img-thumbnail" src="/static/img/brands/lianzong.png">
+                <img class="img-thumbnail" src="/static/img/brands/17173.png">
+                <img class="img-thumbnail" src="/static/img/brands/taobao.png">
+                <img class="img-thumbnail" src="/static/img/brands/snda.png">
+                <img class="img-thumbnail" src="/static/img/brands/tencent.png">
+                <img class="img-thumbnail" src="/static/img/brands/zalora.png">
+                <img class="img-thumbnail" src="/static/img/brands/wepiao.png">
+                <img class="img-thumbnail" src="/static/img/brands/lianjia.png">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+
+</div>
+
+		    </div>
+		    <div class="wrapper-push"></div>
+		</div>
+		<footer id="footer">
+    <div class="container">
+        <div class="row footer-wrap">
+            <div class="col-md-12 desc">
+                <div class="pull-right">
+                    <div class="btn-group dropup">
+                        <button type="button" class="btn btn-default btn-md dropdown-toggle" data-toggle="dropdown">Language:English <i class="caret"></i></button>
+                        <ul class="dropdown-menu">
+                            
+                                <li><a href="javascript::" data-lang="zh-CN" class="lang-changed">简体中文</a></li>
+                            
+                                <li><a href="javascript::" data-lang="ru-RU" class="lang-changed">Russian</a></li>
+                            
+                        </ul>
+                    </div>
+                    
+                    
+                        <a class="btn btn-success" href="/donate"><i class="icon-dollar"></i> Donate Us</a>
+                    
+                </div>
+                
+                <p>
+                    <a href="/about"><strong>About</strong></a>
+                    |
+                    <a href="/team"><strong>Team</strong></a>
+                    |
+                    <a target="_blank" href="https://github.com/astaxie/beego" target="_blank"><strong><i class="icon-github-sign"></i> Github</strong></a>
+                    - 24ms.
+                </p>
+
+                <p>
+                    Copyright © 2012-2014 Beego Under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html">apache 2.0 licence</a>. Logo designed by <a target="_blank" href="http://mdong.org">Tengfei</a>.
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-39123845-1', 'beego.me');
+  ga('send', 'pageview');
+
+</script>
+
+<script>/* Beego Compress group `lib` begin */</script>
+	<script type="text/javascript" src="/static_source/js/jquery.min.js?ver=1409586500"></script>
+	<script type="text/javascript" src="/static_source/js/jquery.extend.js?ver=1409586500"></script>
+	<script type="text/javascript" src="/static_source/js/bootstrap.js?ver=1409586500"></script>
+	<script type="text/javascript" src="/static_source/js/lib.min.js?ver=1409586500"></script>
+	<script type="text/javascript" src="/static_source/js/prettify.js?ver=1409586500"></script>
+	<script type="text/javascript" src="/static_source/js/jStorage.js?ver=1409586500"></script>
+	<script type="text/javascript" src="/static_source/js/jquery.jpanelmenu.min.js?ver=1409586500"></script>
+	<script type="text/javascript" src="/static_source/js/jRespond.min.js?ver=1409586500"></script>
+	<script type="text/javascript" src="/static_source/js/jquery.clingify.min.js?ver=1409586500"></script>
+	<script type="text/javascript" src="/static_source/js/imagesloaded.pkgd.min.js?ver=1409586500"></script>
+	<script type="text/javascript" src="/static_source/js/masonry.pkgd.min.js?ver=1409586500"></script>
+	<script>/* end */</script>
+<script>/* Beego Compress group `app` begin */</script>
+	<script type="text/javascript" src="/static_source/js/main.js?ver=1409586500"></script>
+	<script>/* end */</script>
+	</body>
+</html>
+
+
+
