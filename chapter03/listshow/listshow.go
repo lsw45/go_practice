@@ -2,6 +2,7 @@ package main
 
 import (
 	"container/list"
+	"fmt"
 )
 
 func main() {
@@ -24,4 +25,8 @@ func main() {
 
 	// 使用
 	l.Remove(element)
+
+	for p := l.Front(); p != nil; p = p.Next() {
+		fmt.Println("Number", p.Value)
+	}
 }
