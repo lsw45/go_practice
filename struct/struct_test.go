@@ -7,6 +7,7 @@ import (
 	// "fmt"
 	"log"
 	"testing"
+	"time"
 	// "os"
 	// "strings"
 )
@@ -27,7 +28,7 @@ type MemberInfo struct {
 	CardTypes   []string // 卡类型
 }
 
-func TestJson(t *testing.T) {
+func TestJson2(t *testing.T) {
 	resp := &QueryMemberResp{
 		CardUrl: "http://vka.ivp.net",
 	}
@@ -39,4 +40,22 @@ func TestJson(t *testing.T) {
 
 	str, _ := json.Marshal(resp)
 	log.Println(string(str))
+
+	card := new(CardPayUpdateReq)
+	log.Printf("%+v", card.CardPayActivity)
+}
+
+type CardPayUpdateReq struct {
+	*CardPayActivity
+	MerchantCode string `json:"merchantCode"`
+}
+type CardPayActivity struct {
+	MerchantCode string    `json:"merchantCode"`
+	Qrcode       string    `json:"qrcode_url"`
+	Link         string    `json:"link"`
+	CardName     string    `json:"card_name"`
+	ExpectedSave int       `json:"expected_save"`
+	CreateAt     time.Time `json:"createAt,omitempty" bson:"createAt"`
+	UpdateAt     time.Time `json:"-" bson:"updateAt,omitempty"`
+	//CardCoupon    []*CouponTemplate    `json:"card_coupon"`
 }

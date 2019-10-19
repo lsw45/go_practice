@@ -32,18 +32,28 @@ func main() {
 
 func BindJson() {
 	var obj interface{}
-	/*type person struct {
+
+	/*person := struct {
 		a int
 		b int
+	}{
+		a: 11, b: 11,
 	}*/
-	var r io.Reader
-	r = strings.NewReader("abcdefghijklmn")
 
-	fmt.Println(r.Len())
+	var r io.ReadCloser
+	r = strings.NewReader("abcdefghijklmn")
 
 	decoder := json.NewDecoder(r)
 	if err := decoder.Decode(obj); err != nil {
 		fmt.Println(err)
 	}
 	fmt.Printf("%+v", obj)
+}
+
+func ReadBody(resp *http.Response) {
+	resBody := resp.Body
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(resBody)
+	fmt.Println(buf.String())
+	fmt.Println(buf.Bytes())
 }

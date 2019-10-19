@@ -8,6 +8,9 @@ import (
 )
 
 func TestIndex(t *testing.T) {
+	var t11 time.Time
+	fmt.Println(t11)          //0001-01-01 00:00:00 +0000 UTC
+	fmt.Println(t11.IsZero()) //true
 	timeFormat()
 	// timeLocation()
 	// timeUnix()
