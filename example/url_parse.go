@@ -15,7 +15,12 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println(u.Scheme)
+	fmt.Println(u.Scheme) //postgres
+
+	raw, err := url.QueryUnescape(u.RawQuery)
+	fmt.Println(raw) //k=v
+	value, err := url.ParseQuery(raw)
+	fmt.Println(value) //map[k:[v]]
 	return
 
 	fmt.Println(u.User)
@@ -37,8 +42,7 @@ func main() {
 }
 
 func urlParse() {
-	s := "https://note.youdao.com/web/#/file/recent/note/1f41f1a02252a3258e70fef5d6ade7ed/"
-	// s := "https://note.youdao.com/web/file/recent/note/1f41f1a02252a3258e70fef5d6ade7ed/"
+	s := "https://note.youdao.com/web?a=11&b=22&c=33#/file/recent/note/1f41f1a02252a3258e70fef5d6ade7ed/#ttl"
 
 	u, err := url.Parse(s)
 	if err != nil {
@@ -46,7 +50,8 @@ func urlParse() {
 	}
 	fmt.Println(u.Scheme)                   // https
 	fmt.Println(u.Host)                     // note.youdao.com
-	fmt.Println(u.Path)                     // /web/
-	fmt.Println(u.Fragment)                 // /file/recent/note/1f41f1a02252a3258e70fef5d6ade7ed/
-	fmt.Println(url.ParseQuery(u.RawQuery)) // map[] <nil>
+	fmt.Println(u.Path)                     // /web
+	fmt.Println(u.Fragment)                 // /file/recent/note/1f41f1a02252a3258e70fef5d6ade7ed/#ttl
+	fmt.Println(u.RawQuery)                 // a=11&b=22&c=33
+	fmt.Println(url.ParseQuery(u.RawQuery)) // map[a:[11] b:[22] c:[33]] <nil>
 }
