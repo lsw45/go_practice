@@ -1,6 +1,7 @@
 package time
 
 import (
+	"encoding/json"
 	"fmt"
 	"math"
 	"testing"
@@ -16,7 +17,8 @@ func TestIndex(t *testing.T) {
 	// timeUnix()
 	// timeDuration()
 	// timeDiff()
-	timeTicker()
+	// timeTicker()
+	timePointerNull()
 }
 
 func timeFormat() {
@@ -188,4 +190,31 @@ func timeTicker() {
 		fmt.Println(v)
 	}
 	fmt.Println("--------------------------------end-----------------------------------")
+}
+
+func timePointerNull() {
+	p := struct {
+		Tp *time.Time `json:"tp"`
+	}{}
+	fmt.Printf("%+v\n", p) // {Tp:<nil>}
+
+	j, _ := json.Marshal(p)
+
+	fmt.Println(string(j)) // {"tp":null}
+
+	tt1 := time.Now()
+	p.Tp = &tt1
+	fmt.Printf("%+v\n", p) // {Tp:2019-10-25 16:24:23.4423372 +0800 CST m=+0.034962101}
+
+	j, _ = json.Marshal(p)
+
+	fmt.Println(string(j)) // {"tp":"2019-10-25T16:24:23.4423372+08:00"}
+
+	p1 := struct {
+		Tp *time.Time `json:"tp,omitempty"`
+	}{}
+
+	j, _ = json.Marshal(p1)
+
+	fmt.Printf("omitempty:%s\n", string(j)) // omitempty:{}
 }
