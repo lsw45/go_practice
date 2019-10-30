@@ -13,12 +13,16 @@ func TestIndex(t *testing.T) {
 	fmt.Println(t11)          //0001-01-01 00:00:00 +0000 UTC
 	fmt.Println(t11.IsZero()) //true
 	timeFormat()
+
+	timeEnd := time.Date(t11.Year(), t11.Month(), t11.Day(), 23, 59, 59, 0, time.Local)
+	fmt.Printf("Time.Date(Time):%v", timeEnd)
+
 	// timeLocation()
 	// timeUnix()
 	// timeDuration()
-	// timeDiff()
+	timeDiff()
 	// timeTicker()
-	timePointerNull()
+	// timePointerNull()
 }
 
 func timeFormat() {
@@ -196,6 +200,7 @@ func timePointerNull() {
 	p := struct {
 		Tp *time.Time `json:"tp"`
 	}{}
+
 	fmt.Printf("%+v\n", p) // {Tp:<nil>}
 
 	j, _ := json.Marshal(p)
