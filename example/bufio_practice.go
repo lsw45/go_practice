@@ -4,13 +4,14 @@ import (
 	"bufio"
 	"bytes"
 	"fmt"
+	"io"
 	"strings"
 )
 
 func main() {
-	// TestPeek()
+	TestPeek()
 	// TestRead()
-	TestBuffered()
+	//TestBuffered()
 	// TestReadByte()
 	// TestUnreadByte()
 	// TestReadRune()
@@ -51,19 +52,32 @@ func TestPeek() {
 
 	// func (b *Reader) Reset(r io.Reader)
 	// Reset丢弃缓冲中的数据，清除任何错误，将b重设为其下层从r读取数据。
-	s.Reset("my name is card")
+	comment := "Package io provides basic interfaces to I/O primitives. " +
+		"Its primary job is to wrap existing implementations of such primitives, " +
+		"such as those in package os, " +
+		"into shared public interfaces that abstract the functionality, " +
+		"plus some other related primitives."
+	s.Reset(comment)
 
+	buf1 := make([]byte,10)
+	reader1 :=io.LimitReader(s,19)
+	for i := 0; i < 3; i++ {
+		n, _ := reader1.Read(buf1) //每一次读取都是将buf1元素按位覆盖
+		fmt.Println(n)
+		fmt.Println(string(buf1))
+	}
 	// func (b *Reader) Peek(n int) ([]byte, error)
-	// Peek 返回缓存的一个切片，该切片引用缓存中前 n 个字节的数据，
+	// Peek 返回Reader的一个切片，该切片引用Reader中从当前起始索引位置开始的 n 个字节的数据，
 	// 该操作不会将数据读出，只是引用，引用的数据在下一次读取操作之
 	// 前是有效的。如果切片长度小于 n，则返回一个错误信息说明原因。
 	// 如果 n 大于缓存的总大小，则返回 ErrBufferFull。
 	br := bufio.NewReader(s)
 
 	b, _ := br.Peek(5)
+	fmt.Printf("%q\n", b) // " basi"
 	b[0] = 'a'
 	b, _ = br.Peek(5)
-	fmt.Printf("%q\n", b) // "ay na"
+	fmt.Printf("%q\n", b) // "abasi"
 }
 
 func TestRead() {
@@ -117,6 +131,8 @@ func TestReadByte() {
 		panic(err)
 	}
 	fmt.Printf("%q\n", tmp)    // 'a'
+
+	// Buffered returns the number of bytes that can be read from the current buffer.
 	fmt.Println(br.Buffered()) // 3
 	for i := 0; i < len(origin); i++ {
 		tmp, err = br.ReadByte()
@@ -300,8 +316,7 @@ func TestWriteTo() {
 // 保证所有的数据都交给了下层的io.Writer。
 func TestNewWriter() {
 
-	// NewWriter创建一个具有默认大小缓冲、写入w的*Writer。
-	// 相当于 NewWriterSize(wr, 4096)
+	// NewWriter创建一个具有默认大小缓冲、写入w的*Writer。 相当于 NewWriterSize(wr, 4096)
 	// func NewWriter(w io.Writer) *Writer
 
 	// Buffered()返回缓冲中已使用的字节数。
