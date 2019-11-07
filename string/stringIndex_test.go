@@ -2,7 +2,7 @@ package main
 
 import (
     "fmt"
-    "strconv"
+    _ "strconv"
     "strings"
     "testing"
 )
@@ -23,4 +23,7 @@ func TestIndex(t *testing.T) {
     //整段的代码的意思是从tracer[comma:]这个字符串中查找“死神”这个字符串，第0位是逗号，第一位开始就是“死神”了，所以这里pos是1
 
     // fmt.Println(tracer[comma+pos+3:])
+
+    fmt.Println(len("] [source=mallcoo/consumeScore.go:85] ["))
+    fmt.Println(len("3138326"))
 }
