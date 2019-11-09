@@ -206,7 +206,7 @@ func runCmd(Client *ssh.Client,week []string) (ret map[string]string) {
 			ss := strings.Replace(stdOut.String(), "\n", "", -1)
 			ret[v] = ss
 		}
-		session.Close()
+		session.Close() // 如果会话是空，close返回errorS.New("EOF")
 	}
 	return ret
 }

@@ -28,3 +28,10 @@ func main() {
 	fmt.Printf("value: %s\n", value)
 
 }
+
+/*
+ptr type: *string
+address: 0xc0000401c0
+value type: string
+value: Malibu Point 10880, 90265
+*/

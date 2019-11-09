@@ -16,6 +16,7 @@ func (c ChipType) String() string {
 	case None:
 		return "None"
 	case CPU:
+		fmt.Printf("cpu")
 		return "CPU"
 	case GPU:
 		return "GPU"
@@ -27,5 +28,5 @@ func (c ChipType) String() string {
 func main() {
 
 	// 输出CPU的值和以整形方式显示
-	fmt.Printf("%s %d", CPU, CPU)
+	fmt.Printf("%s %d", CPU, CPU) //cpuCPU 1
 }

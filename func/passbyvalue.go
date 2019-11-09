@@ -55,3 +55,10 @@ func main() {
 	// 输出结构的指针地址
 	fmt.Printf("out ptr: %p\n", &out)
 }
+
+//in value: {complax:[1 2 3] instance:{a:5} ptr:0xc0000140a0}
+//in ptr: 0xc00005c300
+//inFunc value: {complax:[1 2 3] instance:{a:5} ptr:0xc0000140a0}
+//inFunc ptr: 0xc00005c390
+//out value: {complax:[1 2 3] instance:{a:5} ptr:0xc0000140a0}
+//out ptr: 0xc00005c360
