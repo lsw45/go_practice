@@ -1,8 +1,13 @@
 package main
 
 import (
+	"bufio"
+	"crypto/md5"
+	"encoding/hex"
 	"flag"
+	"io"
 	"os"
+	"strings"
 	"time"
 	"github.com/sirupsen/logrus"
 )
@@ -35,6 +40,8 @@ type storageBlock struct {
 	storageModel string `description:"存储类型，存储格式"`
 	unode urlNode `description:"存储内容"`
 }
+const REQUEST = "req:{"
+const RESPONSE = "req:&"
 
 var log = logrus.New()
 func init(){
@@ -44,7 +51,7 @@ func init(){
 
 func main(){
 	//	获取参数
-	logFilePath:=flag.String("logFilePath","/","数据存储文件")
+	logFilePath:=flag.String("logFilePath","D:/workspace/go_workspace/go_practise/simple.log","源文件")
 	routineNum := flag.Int("routineNum",5,"")
 	l := flag.String("l","/tmp/log","日志文件")
 	flag.Parse()
@@ -52,7 +59,7 @@ func main(){
 
 	//打日志
 	logFd,err := os.OpenFile(*l,os.O_CREATE|os.O_WRONLY,0644)
-	if err ==nil {
+	if err == nil {
 		log.Out = logFd //日志打印到日志文件
 		defer logFd.Close()
 	}
@@ -83,12 +90,58 @@ func main(){
 	time.Sleep(time.Second*5)
 }
 
-func readFileLineByLine(params cmdParams,logChannel chan string){
+func readFileLineByLine(params cmdParams,logChannel chan string) error {
+	file,err := os.Open(params.logFilePath)
+	if err !=nil{
+		log.Warningf("open file error:%s\n",err)
+		return err
+	}
+	defer file.Close()
+	reader:=bufio.NewReader(file)
+	count := 0 //没1000行标识一次
+	for {
+		line,err := reader.ReadString('\n') //byte
+		count++
+		if count%(1000*params.routineNum) == 0{
+			log.Infof("has read line:%v\n", count)
+		}
 
+		if err != nil {
+			if err == io.EOF {
+				log.Infof("finished reading log file:%s\n", err)
+			}else{
+				log.Infof("reading log file error:%s\n", err)
+			}
+			return err
+		}
+		logChannel<-line
+	}
+	return nil
 }
 
 func logConsumer(logChannel chan string, pvChannel  chan urlData,uvChannel  chan urlData){
+	for line := range logChannel{
+		data := cutLogFetchData(line)
 
+		//	uid
+		hasher := md5.New()
+		hasher.Write([]byte(data.ua+data.refer))
+		uid := hex.EncodeToString(hasher.Sum(nil))
+
+		udata := urlData{uid,data}
+	}
+}
+
+func cutLogFetchData(line string) digData{
+	dig := digData{}
+	line = strings.Trim(line,"")
+	if i:=strings.Index(line,REQUEST);i!=-1{
+
+	}else if i:=strings.Index(line,RESPONSE);i!=-1{
+
+	}
+
+	return dig
 }
 
 func uvCounter(pvChannel chan urlData,storageChannel chan storageBlock){
