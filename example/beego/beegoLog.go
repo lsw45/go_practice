@@ -1,14 +1,15 @@
-package main
+package beego
 
 import (
 	"github.com/astaxie/beego/logs"
+	"testing"
 )
 
 /*
 * 1.同一个日志对象，只能使用一个初始化
 
  */
-func main() {
+func TestFunc(t *testing.T) {
 	Console()
 	//ToFile()
 	//consoleAndFile()
