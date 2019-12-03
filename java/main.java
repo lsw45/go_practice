@@ -1,11 +1,21 @@
+package practic;
+
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+// import SnowflakeDistributeId;
 
-class DateTest {
+public class DateTest {
 	public static void main(String[] args) {
-                calendar();
+                // calendar();
+                SnowflakeDistributeId idWorker = new SnowflakeDistributeId(0, 0);
+                for (int i = 0; i < 10; i++) {
+                    long id = idWorker.nextId();
+            //      System.out.println(Long.toBinaryString(id));
+                    System.out.println(id);
+                }
         }
+
         public static void date(){
                 Date now= new Date();
                 //打印当前时间
@@ -106,11 +116,3 @@ class DateTest {
                 return sdf.format(time);
         }
 }
-
-/*
-
-
-
-
-
-*/
