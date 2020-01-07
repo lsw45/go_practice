@@ -45,12 +45,10 @@ func (s *QueuedScheduler) Run() {
 
 			select {
 			case r := <-s.requestChann:
-				// 如果开始requestQ=nil,append之后就是包含一个r元素的切片
-				requestQ = append(requestQ, r)
+				requestQ = append(requestQ, r) // 如果开始requestQ=nil,append之后就是包含一个r元素的切片
 			case w := <-s.workerChan:
 				workerQ = append(workerQ, w)
-				// 进行request的分发
-			case activeWorker <- activeRequest:
+			case activeWorker <- activeRequest: // 进行request的分发
 				requestQ = requestQ[1:]
 				workerQ = workerQ[1:]
 			}

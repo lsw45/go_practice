@@ -23,7 +23,7 @@ func (e *ConcurrentEngine) Run(seeds ...model.Request) {
 	out := make(chan model.ParseResult)
 	for i := 0; i < e.WorkerCount; i++ {
 		// 每个 Worker 都创建自己的一个 chan Request
-		createWorker(e.Scheduler.WorkerChann(), out, e.Scheduler);
+		createWorker(e.Scheduler.WorkerChann(), out, e.Scheduler)
 	}
 	for _, r := range seeds {
 		e.Scheduler.Submit(r)
