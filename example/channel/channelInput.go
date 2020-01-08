@@ -1,5 +1,6 @@
 package channel
 
+/*
 type ProducerMessage struct {
 	Key         Encoder
 	Value       Encoder
@@ -49,3 +50,4 @@ func TestInput() {
 		return -1, -1, err.Err
 	}
 }
+*/

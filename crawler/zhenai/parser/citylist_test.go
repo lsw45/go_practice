@@ -3,9 +3,13 @@ package parser
 import (
 	"io/ioutil"
 	"testing"
+	"time"
 )
 
 func TestParseCityList(t *testing.T) {
+	var tick = time.Tick(10 * time.Microsecond)
+	<-tick
+
 	expectRequestsLen := 470
 	expectCitiesLen := 470
 	// 表格驱动测试
