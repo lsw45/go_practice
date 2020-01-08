@@ -48,7 +48,8 @@ func exampleNewGCM_encrypt(src, k, n, a string) string {
 	additionalData := []byte(a)
 	ciphertext := aesgcm.Seal(nil, nonce, plaintext, additionalData)
 
-	return base64.StdEncoding.EncodeToString(ciphertext) //string(ciphertext)是乱码，为了得到可见字符串，对[]byte进行base64加密
+	//ciphertext是二进制数组，string(ciphertext)得到的是乱码，为了得到可见字符串，对ciphertext进行base64加密，或者hex.EncodeToString(ciphertext)-返回的是16进制形式的字符串
+	return base64.StdEncoding.EncodeToString(ciphertext)
 }
 
 func exampleNewGCM_decrypt(src, k, n, a string) string {
