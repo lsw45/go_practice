@@ -27,7 +27,7 @@ func main() {
 	srcData[0] = 999
 
 	// 打印引用切片的第一个元素
-	fmt.Println(refData[0])
+	fmt.Println(refData[0]) //999
 
 	// 打印拷贝切片的第一个和最后元素
 	fmt.Println(copyData[0], copyData[elementCount-1]) //0 999

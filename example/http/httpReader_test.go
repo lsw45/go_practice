@@ -3,6 +3,8 @@ package http
 import (
 	"fmt"
 	_ "io/ioutil"
+	"log"
+	"net/http"
 	_ "net/http"
 	"net/url"
 	_ "strings"
@@ -26,4 +28,13 @@ func TestJoin(t *testing.T) {
 	fmt.Println(i)
 	fmt.Printf("%x\n", []rune(i)) //[78 78 74 4e09 6bdb]
 	fmt.Printf("%x\n", []byte(i)) //787874e4b889e6af9b
+
+	var w http.ResponseWriter
+	//http.ResponseWriter 是否实现了 http.Pusher 接口来判断是否支持 Server Push。
+	if push, ok := w.(http.Pusher); ok {
+		if err := push.Push("/app.js", nil); err != nil {
+			log.Printf("Failed to push: %v", err)
+		}
+	}
+	w.Header().Add()
 }
