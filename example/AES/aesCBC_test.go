@@ -1,4 +1,4 @@
-package main
+package AES
 
 import (
 	"bytes"
@@ -31,9 +31,9 @@ func TestAESCBC(t *testing.T) {
 	key := []byte(sKey)
 	iv := []byte(ivParameter)
 	text := []byte(content)
-	fmt.Println(len(key))
-	fmt.Println(len(iv))
-	fmt.Println(len(text))
+	fmt.Printf("key length:%v\n", len(key))
+	fmt.Printf("iv length:%v\n", len(iv))
+	fmt.Printf("text length:%v\n", len(text))
 
 	pass := []byte(encryptAESCBC(text, key, iv))
 
