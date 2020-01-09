@@ -9,6 +9,7 @@ import (
 	"testing"
 )
 
+//AEAD_AES_256_GCM 加密解密
 func TestAesEncryptBase64(t *testing.T) {
 	associatedData := "mall_transaction"
 
@@ -67,28 +68,6 @@ func NewGCMEncryptBase64(src, k, n, a string) string {
 	return base64.StdEncoding.EncodeToString(ciphertext)
 }
 
-func NewGCMEncryptHex(src, k, n, a string) string {
-	key := []byte(k)
-	plaintext := []byte(src)
-
-	block, err := aes.NewCipher(key)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	aesgcm, err := cipher.NewGCM(block)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	nonce, _ := hex.DecodeString(n) // n是16进制
-	additionalData := []byte(a)
-	ciphertext := aesgcm.Seal(nil, nonce, plaintext, additionalData)
-
-	//ciphertext是二进制数组，string(ciphertext)得到的是乱码，为了得到可见字符串，hex.EncodeToString(ciphertext)-返回的是16进制形式的字符串
-	return hex.EncodeToString(ciphertext)
-}
-
 func NewGCMDecryptBase64(src, k, n, a string) string {
 	key := []byte(k)
 	block, err := aes.NewCipher(key)
@@ -111,6 +90,28 @@ func NewGCMDecryptBase64(src, k, n, a string) string {
 	}
 
 	return string(plaintext)
+}
+
+func NewGCMEncryptHex(src, k, n, a string) string {
+	key := []byte(k)
+	plaintext := []byte(src)
+
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	aesgcm, err := cipher.NewGCM(block)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	nonce, _ := hex.DecodeString(n) // n是16进制
+	additionalData := []byte(a)
+	ciphertext := aesgcm.Seal(nil, nonce, plaintext, additionalData)
+
+	//ciphertext是二进制数组，string(ciphertext)得到的是乱码，为了得到可见字符串，hex.EncodeToString(ciphertext)-返回的是16进制形式的字符串
+	return hex.EncodeToString(ciphertext)
 }
 
 func NewGCMDecryptHex(src, k, n, a string) string {
