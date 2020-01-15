@@ -1,4 +1,4 @@
-package main
+package buffio
 
 import (
 	"bufio"
@@ -6,37 +6,10 @@ import (
 	"fmt"
 	"io"
 	"strings"
+	"testing"
 )
 
-func main() {
-	TestPeek()
-	// TestRead()
-	//TestBuffered()
-	// TestReadByte()
-	// TestUnreadByte()
-	// TestReadRune()
-	// TestUnReadRune()
-	// TestReadLine()
-	// TestReadBytes()
-	// TestReadString()
-	// TestWriteTo()
-	// TestNewWriter()
-	// TestWrite()
-	// TestWriteString()
-	// TestWriteByte()
-	// TestWriteRune()
-	// TestReadFrom()
-	// TestReadWriter()
-	// TestNewScanner()
-	// TestSplit()
-	// TestScan()
-	// TestScanBytes()
-	// TestScanRunes()
-	// TestScanWords()
-	// TestScanLines()
-}
-
-func TestPeek() {
+func TestPeek1(t *testing.T) {
 	/*
 	   func NewReaderSize(rd io.Reader, size int) *Reader
 	   NewReaderSize 将 rd 封装成一个带缓存的 bufio.Reader 对象，
@@ -59,8 +32,8 @@ func TestPeek() {
 		"plus some other related primitives."
 	s.Reset(comment)
 
-	buf1 := make([]byte,10)
-	reader1 :=io.LimitReader(s,19)
+	buf1 := make([]byte, 10)
+	reader1 := io.LimitReader(s, 19)
 	for i := 0; i < 3; i++ {
 		n, _ := reader1.Read(buf1) //每一次读取都是将buf1元素按位覆盖
 		fmt.Println(n)
@@ -80,7 +53,7 @@ func TestPeek() {
 	fmt.Printf("%q\n", b) // "abasi"
 }
 
-func TestRead() {
+func TestRead1(t *testing.T) {
 	// Read 从 b 中读出数据到 p 中，返回写入p的字节数
 	// 读取到达结尾时，返回值n将为0而err将为io.EOF。
 	// 如果缓存不为空，则只能读出缓存中的数据，不会从底层 io.Reader
@@ -106,7 +79,7 @@ func TestRead() {
 	fmt.Printf("%s %v %v\n", b[:n], n, err) // 0 EOF
 }
 
-func TestBuffered() {
+func TestBuffered1(t *testing.T) {
 	// 返回可以从缓存中读取的字节数
 	// func (b *Reader) Buffered() int { return b.w - b.r }
 	s := strings.NewReader("123456789")
@@ -119,7 +92,7 @@ func TestBuffered() {
 	fmt.Println(br.Buffered()) // 3
 }
 
-func TestReadByte() {
+func TestReadByte1(t *testing.T) {
 	// ReadByte读取并返回一个字节。如果没有可用的数据，会返回错误。
 	// func (b *Reader) ReadByte() (c byte, err error)
 	origin := "abcd"
@@ -130,7 +103,7 @@ func TestReadByte() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%q\n", tmp)    // 'a'
+	fmt.Printf("%q\n", tmp) // 'a'
 
 	// Buffered returns the number of bytes that can be read from the current buffer.
 	fmt.Println(br.Buffered()) // 3
@@ -144,7 +117,7 @@ func TestReadByte() {
 	}
 }
 
-func TestUnreadByte() {
+func TestUnreadByte1(t *testing.T) {
 	// 撤消最后读出的字节
 	s := strings.NewReader("abcde")
 	br := bufio.NewReader(s)
@@ -157,7 +130,7 @@ func TestUnreadByte() {
 	fmt.Printf("%q\n", tmp) // 'a'
 }
 
-func TestReadRune() {
+func TestReadRune1(t *testing.T) {
 	// ReadRune读取一个utf-8编码的unicode码值
 	chinese := "中国人"
 	s := strings.NewReader(chinese)
@@ -169,7 +142,7 @@ func TestReadRune() {
 	fmt.Printf("%q\n", tmp) // '中'
 }
 
-func TestUnReadRune() {
+func TestUnReadRune1(t *testing.T) {
 	chinese := "中国人"
 	s := strings.NewReader(chinese)
 	br := bufio.NewReader(s)
@@ -186,7 +159,7 @@ func TestUnReadRune() {
 	fmt.Printf("%q\n", tmp) // '中'
 }
 
-func TestReadLine() {
+func TestReadLine1(t *testing.T) {
 	// ReadLine 是一个低水平的行读取原语，大多数情况下，应该使用
 	// ReadBytes('\n') 或 ReadString('\n')，或者使用一个 Scanner。
 	//
@@ -218,7 +191,7 @@ func TestReadLine() {
 	}
 }
 
-func TestReadSlice() {
+func TestReadSlice1(t *testing.T) {
 	// ReadSlice 在 b 中查找 delim 并返回 delim 及其之前的所有数据。
 	// 该操作会读出数据，返回的切片是已读出的数据的引用，切片中的数据
 	// 在下一次读取操作之前是有效的。
@@ -256,7 +229,7 @@ func TestReadSlice() {
 	fmt.Printf("%q\n", w) // panic: EOF
 }
 
-func TestReadBytes() {
+func TestReadBytes1(t *testing.T) {
 	// ReadBytes 功能同 ReadSlice，只不过返回的是缓存的拷贝。
 	// func (b *Reader) ReadBytes(delim byte) (line []byte, err error)
 	s := strings.NewReader("ABC,EFG,HIJ")
@@ -281,7 +254,7 @@ func TestReadBytes() {
 
 }
 
-func TestReadString() {
+func TestReadString1(t *testing.T) {
 	// ReadString 功能同 ReadBytes，只不过返回的是字符串。
 	// func (b *Reader) ReadString(delim byte) (line string, err error)
 	s := strings.NewReader("你好,我是卡牌")
@@ -299,7 +272,7 @@ func TestReadString() {
 	fmt.Printf("%s\n", line)
 }
 
-func TestWriteTo() {
+func TestWriteTo1(t *testing.T) {
 	// WriteTo方法实现了io.WriterTo接口。
 	// func (b *Reader) WriteTo(w io.Writer) (n int64, err error)
 	s := strings.NewReader("ABCDEFG")
@@ -314,7 +287,7 @@ func TestWriteTo() {
 // 该对象将不再接受任何数据，返回该错误
 // 数据都写入后，调用者有义务调用Flush方法,
 // 保证所有的数据都交给了下层的io.Writer。
-func TestNewWriter() {
+func TestNewWriter1(t *testing.T) {
 
 	// NewWriter创建一个具有默认大小缓冲、写入w的*Writer。 相当于 NewWriterSize(wr, 4096)
 	// func NewWriter(w io.Writer) *Writer
@@ -339,7 +312,7 @@ func TestNewWriter() {
 	fmt.Println(bw.Available(), bw.Buffered()) // 4096  0
 }
 
-func TestWrite() {
+func TestWrite1(t *testing.T) {
 	// Write 将 p 中的数据写入 b 中，返回写入的字节数
 	// 如果写入的字节数小于 p 的长度，则返回一个错误信息
 	// func (b *Writer) Write(p []byte) (nn int, err error)
@@ -354,7 +327,7 @@ func TestWrite() {
 	fmt.Printf("%q\n", b)
 }
 
-func TestWriteString() {
+func TestWriteString1(t *testing.T) {
 	// WriteString 同 Write，只不过写入的是字符串
 	// func (b *Writer) WriteString(s string) (int, error)
 	b := bytes.NewBuffer(make([]byte, 0))
@@ -364,7 +337,7 @@ func TestWriteString() {
 	fmt.Printf("%s\n", b)
 }
 
-func TestWriteByte() {
+func TestWriteByte1(t *testing.T) {
 	// WriteByte写入单个字节。
 	// func (b *Writer) WriteByte(c byte) error
 	b := bytes.NewBuffer(make([]byte, 0))
@@ -374,7 +347,7 @@ func TestWriteByte() {
 	fmt.Println(b)
 }
 
-func TestWriteRune() {
+func TestWriteRune1(t *testing.T) {
 	// WriteRune写入一个unicode码值（的utf-8编码），返回写入的字节数和可能的错误。
 	// func (b *Writer) WriteRune(r rune) (size int, err error)
 	b := bytes.NewBuffer(make([]byte, 0))
@@ -388,7 +361,7 @@ func TestWriteRune() {
 	fmt.Println(b) // 周
 }
 
-func TestReadFrom() {
+func TestReadFrom1(t *testing.T) {
 	// ReadFrom实现了io.ReaderFrom接口。
 	// func (b *Writer) ReadFrom(r io.Reader) (n int64, err error)
 	// ReadFrom无需使用Flush
@@ -399,7 +372,7 @@ func TestReadFrom() {
 	fmt.Println(b)
 }
 
-func TestReadWriter() {
+func TestReadWriter1(t *testing.T) {
 	// ReadWriter类型保管了指向Reader和Writer类型的指针
 	// 实现了io.ReadWriter接口。
 
@@ -425,7 +398,7 @@ func TestReadWriter() {
 	fmt.Println(b)
 }
 
-func TestNewScanner() {
+func TestNewScanner1(t *testing.T) {
 	// Scanner 提供了一个方便的接口来读取数据，例如遍历多行文本中的行。Scan 方法会通过
 	// 一个“匹配函数”读取数据中符合要求的部分，跳过不符合要求的部分。“匹配函数”由调
 	// 用者指定。本包中提供的匹配函数有“行匹配函数”、“字节匹配函数”、“字符匹配函数”
@@ -462,7 +435,7 @@ func TestNewScanner() {
 	}
 }
 
-func TestSplit() {
+func TestSplit1(t *testing.T) {
 	// Split设置该Scanner的分割函数。默认设置为 bufio.ScanLines()
 	// 本方法必须在Scan之前调用。
 	// func (s *Scanner) Split(split SplitFunc)
@@ -478,7 +451,7 @@ func TestSplit() {
 	}
 }
 
-func TestScan() {
+func TestScan1(t *testing.T) {
 	// Scan方法获取当前位置的token（该token可以通过Bytes或Text方法获得），
 	// 并让Scanner的扫描位置移动到下一个token。
 	// 当扫描因为抵达输入流结尾或者遇到错误而停止时，
@@ -494,7 +467,7 @@ func TestScan() {
 	}
 }
 
-func TestScanBytes() {
+func TestScanBytes1(t *testing.T) {
 	// Bytes方法返回最近一次Scan调用生成的token。
 	// 底层数组指向的数据可能会被下一次Scan的调用重写。
 	s := strings.NewReader("abcd")
@@ -509,7 +482,7 @@ func TestScanBytes() {
 	}
 }
 
-func TestScanRunes() {
+func TestScanRunes1(t *testing.T) {
 	// ScanRunes是用于Scanner类型的分割函数（符合SplitFunc），
 	// 本函数会将每个utf-8编码的unicode码值作为一个token返回。
 	s := strings.NewReader("周起卡牌程序员")
@@ -527,7 +500,7 @@ func TestScanRunes() {
 	}
 }
 
-func TestScanWords() {
+func TestScanWords1(t *testing.T) {
 	// ScanRunes是用于Scanner类型的分割函数(符合SplitFunc)，
 	// 本函数会将空白(参见unicode.IsSpace)
 	// 分隔的片段（去掉前后空白后）作为一个token返回。
@@ -544,7 +517,7 @@ func TestScanWords() {
 	}
 }
 
-func TestScanLines() {
+func TestScanLines1(t *testing.T) {
 	// 将每一行文本去掉末尾的换行标记作为一个token返回
 	// 此函数的bs.Scan()的默认值
 	s := strings.NewReader("卡牌\n周起\n程序员\n")

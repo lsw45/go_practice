@@ -22,7 +22,6 @@ func main() {
 
 	// 遍历所有sync.Map中的键值对
 	scene.Range(func(k, v interface{}) bool {
-
 		fmt.Println("iterate:", k, v)
 		return true
 	})

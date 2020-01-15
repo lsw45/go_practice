@@ -1,4 +1,4 @@
-package main
+package chapter06
 
 import "fmt"
 
@@ -38,4 +38,6 @@ func main() {
 
 	fmt.Printf("%+v\n", c)
 
+	c1 := Car{}
+	fmt.Printf("%+v\n", c1)
 }

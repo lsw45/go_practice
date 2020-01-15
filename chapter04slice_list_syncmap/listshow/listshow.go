@@ -23,7 +23,7 @@ func main() {
 	// 在“fist”之前添加”noon”
 	l.InsertBefore("noon", element)
 
-	// 使用
+	// 删除
 	l.Remove(element)
 
 	for p := l.Front(); p != nil; p = p.Next() {

@@ -43,12 +43,6 @@ func TestAESCBC(t *testing.T) {
 	fmt.Println(string(dst))
 }
 
-func ZeroPadding(ciphertext []byte, blockSize int) []byte {
-	padding := blockSize - len(ciphertext)%blockSize
-	padtext := bytes.Repeat([]byte{0}, padding) //用0去填充
-	return append(ciphertext, padtext...)
-}
-
 //AES加密，CBC,Nopadding:AES的NoPadding模式加密的key和data的byte字节数必须为16的倍数
 func encryptAESCBC(src, key, iv []byte) string {
 	block, err := aes.NewCipher(key[:])
@@ -62,9 +56,15 @@ func encryptAESCBC(src, key, iv []byte) string {
 	crypted := make([]byte, len(src))
 	//指定分组模式，返回一个BlockMode接口对象
 	blockMode := cipher.NewCBCEncrypter(block, iv)
-	// 根据CryptBlocks方法的说明，如下方式初始化crypted也可以
+	//根据CryptBlocks方法的说明，如下方式初始化crypted也可以
 	blockMode.CryptBlocks(crypted, src)
 	return string(crypted)
+}
+
+func ZeroPadding(ciphertext []byte, blockSize int) []byte {
+	padding := blockSize - len(ciphertext)%blockSize
+	padtext := bytes.Repeat([]byte{0}, padding) //用0去填充
+	return append(ciphertext, padtext...)
 }
 
 const hextable = "0123456789abcdef"

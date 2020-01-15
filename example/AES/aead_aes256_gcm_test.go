@@ -31,7 +31,7 @@ func TestAesEncryptBase64(t *testing.T) {
 	fmt.Println("new plain:", newPlain)
 }
 
-func TestAesEncryptHex(t *testing.T) {
+func TestAesEncryptAndDecrypt(t *testing.T) {
 	associatedData := "mall_transaction"
 
 	nonce := "37b8e8a308c354048d245f6d"
@@ -46,6 +46,7 @@ func TestAesEncryptHex(t *testing.T) {
 	fmt.Println("new plain:", newPlain)
 }
 
+//对密文进行base64加密
 func NewGCMEncryptBase64(src, k, n, a string) string {
 	key := []byte(k)
 	plaintext := []byte(src)
@@ -92,6 +93,7 @@ func NewGCMDecryptBase64(src, k, n, a string) string {
 	return string(plaintext)
 }
 
+// 对密文进行16进制加密
 func NewGCMEncryptHex(src, k, n, a string) string {
 	key := []byte(k)
 	plaintext := []byte(src)
