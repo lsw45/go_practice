@@ -107,7 +107,7 @@ func ExampleResponseWriter_trailers() {
 		w.WriteHeader(http.StatusOK)
 
 		w.Header().Set("AtEnd1", "value 1")
-		io.WriteString(w, "This HTTP response has both headers before this text and trailers at the end.\n")
+		_, _ = io.WriteString(w, "This HTTP response has both headers before this text and trailers at the end.\n")
 		w.Header().Set("AtEnd2", "value 2")
 		w.Header().Set("AtEnd3", "value 3") // These will appear as trailers.
 	})
