@@ -12,7 +12,36 @@ import (
 )
 
 func TestJoin(t *testing.T) {
-	// athEscape escapes the string so it can be safely placed inside a URL path segment.
+	values, err := url.ParseRequestURI("https://www.baidu.com/s?wd=%E6%90%9C%E7%B4%A2&rsv_spt=1&issp=1&f=8&rsv_bp=0&rsv_idx=2")
+	fmt.Println(values) // https://www.baidu.com/s?wd=%E6%90%9C%E7%B4%A2&rsv_spt=1&issp=1&f=8&rsv_bp=0&rsv_idx=2
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	urlParam := values.RawQuery
+	fmt.Println(urlParam) // wd=%E6%90%9C%E7%B4%A2&rsv_spt=1&issp=1&f=8&rsv_bp=0&rsv_idx=2
+
+	// ParseQuery传入的必须是参数，也就是url里边的RawQuery的值 就是url?之后的path
+	fmt.Println(url.ParseQuery(urlParam)) //map[f:[8] issp:[1] rsv_bp:[0] rsv_idx:[2] rsv_spt:[1] wd:[搜索]] <nil>
+
+	//这里url.Query()直接就解析成map了，url.ParseQuery()反而多了一步，果断用这个方法
+	urlValue := values.Query() // 和下面的c变量类型相同都为url.Values类型，有相同的属性方法
+	fmt.Println(urlValue)      // map[f:[8] issp:[1] rsv_bp:[0] rsv_idx:[2] rsv_spt:[1] wd:[搜索]]
+
+	//val := url.Values{}
+	c := url.Values{"method": {"get", "put"}, "id": {"1"}}
+	fmt.Println(c.Encode())      // id=1&method=get&method=put
+	fmt.Println(c.Get("method")) // get-只能获取到第一个元素
+
+	c.Set("method", "post") // 修改method的值为post
+	fmt.Println(c)          //map[id:[1] method:[post]]
+
+	c.Del("method")    // 删除method元素
+	c.Add("new", "hi") // 添加新的元素new:hi
+	fmt.Println(c)     //map[id:[1] new:[hi]]
+
+	// QueryEscape escapes the string so it can be safely placed inside a URL query.
 	fmt.Println(url.QueryEscape("我爱你~~~")) //%E6%88%91%E7%88%B1%E4%BD%A0~~~
 
 	v := url.Values{}
@@ -36,5 +65,4 @@ func TestJoin(t *testing.T) {
 			log.Printf("Failed to push: %v", err)
 		}
 	}
-	w.Header().Add()
 }
