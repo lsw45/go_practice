@@ -11,15 +11,11 @@ import (
 
 func TestPeek1(t *testing.T) {
 	/*
-	   func NewReaderSize(rd io.Reader, size int) *Reader
-	   NewReaderSize 将 rd 封装成一个带缓存的 bufio.Reader 对象，
-	   缓存大小由 size 指定（如果小于 16 则会被设置为 16）。
-	   minReadBufferSize = 16
-	   如果 rd 的基类型就是有足够缓存的 bufio.Reader 类型，则直接将
-	   rd 转换为基类型返回。
+	   func NewReaderSize(rd io.Reader, size int) *Reader 将 rd 封装成一个带缓存的 bufio.Reader 对象，
+	   缓存大小由 size 指定（如果小于 16 则会被设置为 16）。minReadBufferSize = 16
+	   如果 rd 的基类型就是有足够缓存的 bufio.Reader 类型，则直接将rd 转换为基类型返回。
 
-	   NewReader()方法返回一个默认大小的带缓存的bufio.Reader对象
-	   即 NewReaderSize(rd, 4096)
+	   NewReader()方法返回一个默认大小的带缓存的bufio.Reader对象，即 NewReaderSize(rd, 4096)
 	*/
 	s := strings.NewReader("hello world")
 
@@ -38,6 +34,14 @@ func TestPeek1(t *testing.T) {
 		n, _ := reader1.Read(buf1) //每一次读取都是将buf1元素按位覆盖
 		fmt.Println(n)
 		fmt.Println(string(buf1))
+		/*
+			10
+			Package io
+			9
+			 provideso
+			0
+			 provideso
+		*/
 	}
 	// func (b *Reader) Peek(n int) ([]byte, error)
 	// Peek 返回Reader的一个切片，该切片引用Reader中从当前起始索引位置开始的 n 个字节的数据，
