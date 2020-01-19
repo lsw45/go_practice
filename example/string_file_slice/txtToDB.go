@@ -1,10 +1,25 @@
 package main
 
 import (
-	"errors"
+	"bufio"
 	"fmt"
+	"github.com/jmoiron/sqlx"
+	"io"
+	"os"
+	"runtime"
+	"strconv"
 	"strings"
+	"sync"
+	"time"
 )
+
+type KfPerson struct {
+	Name     string
+	Idcard   string
+	Gender   string
+	Birthday string
+	Address  string
+}
 
 var (
 	//全局数据管道
