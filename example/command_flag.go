@@ -12,7 +12,6 @@ func main() {
 	fmt.Println("word:", *wordPtr)
 
 	flags()
-	return
 
 	// os.Args 提供原始命令行参数访问功能。
 	// 注意，切片中的第一个参数是该程序的路径，并且 os.Args[1:]保存所有程序的的参数。

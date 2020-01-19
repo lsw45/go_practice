@@ -9,7 +9,7 @@ import "syscall"
 func main() {
 
 	execing()
-	return
+	//return
 
 	// 我们将从一个简单的命令开始，没有参数或者输入，仅打印一些信息到标准输出流。
 	// exec.Command 函数帮助我们创建一个表示这个外部进程的对象。
