@@ -41,7 +41,8 @@ func main() {
 	fmt.Print(r3.Intn(100)) //5,87
 	fmt.Println()
 
-	randInt()
+	rand.Seed(time.Now().UnixNano())
+	fmt.Println(rand.Intn(10000))
 }
 
 // int32：-2147483647~2147483647——10位

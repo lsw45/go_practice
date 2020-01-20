@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+//发送文件
 func TestSendFile(t *testing.T) {
 	var (
 		err        error
@@ -46,12 +47,13 @@ func TestSendFile(t *testing.T) {
 		if n == 0 {
 			break
 		}
-		dstFile.Write(buf)
+		_, _ = dstFile.Write(buf)
 	}
 
 	fmt.Println("copy file to remote server finished!")
 }
 
+//接受文件
 func TestReceiveFile(t *testing.T) {
 	var (
 		err        error

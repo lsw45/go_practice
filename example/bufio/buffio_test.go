@@ -31,7 +31,7 @@ func TestPeek1(t *testing.T) {
 	buf1 := make([]byte, 10)
 	reader1 := io.LimitReader(s, 19)
 	for i := 0; i < 3; i++ {
-		n, _ := reader1.Read(buf1) //每一次读取都是将buf1元素按位覆盖
+		n, _ := reader1.Read(buf1) //每一次读取都是将buf1元素从左到右按位覆盖
 		fmt.Println(n)
 		fmt.Println(string(buf1))
 		/*

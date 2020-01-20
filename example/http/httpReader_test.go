@@ -19,18 +19,21 @@ func TestJoin(t *testing.T) {
 		fmt.Println(err)
 	}
 
-	urlParam := values.RawQuery
-	fmt.Println(urlParam) // wd=%E6%90%9C%E7%B4%A2&rsv_spt=1&issp=1&f=8&rsv_bp=0&rsv_idx=2
+	urlParam := values.RawQuery // url的 ? 之后的部分
+	fmt.Println(urlParam)       // wd=%E6%90%9C%E7%B4%A2&rsv_spt=1&issp=1&f=8&rsv_bp=0&rsv_idx=2
 
 	// ParseQuery传入的必须是参数，也就是url里边的RawQuery的值 就是url?之后的path
 	fmt.Println(url.ParseQuery(urlParam)) //map[f:[8] issp:[1] rsv_bp:[0] rsv_idx:[2] rsv_spt:[1] wd:[搜索]] <nil>
 
-	//这里url.Query()直接就解析成map了，url.ParseQuery()反而多了一步，果断用这个方法
+	//url.Query()直接就解析成map了，因为内部代码就是封装上面的两步
 	urlValue := values.Query() // 和下面的c变量类型相同都为url.Values类型，有相同的属性方法
 	fmt.Println(urlValue)      // map[f:[8] issp:[1] rsv_bp:[0] rsv_idx:[2] rsv_spt:[1] wd:[搜索]]
 
 	//val := url.Values{}
 	c := url.Values{"method": {"get", "put"}, "id": {"1"}}
+	fmt.Println(c) // map[id:[1] method:[get put]]
+
+	// encodes the values into ``URL encoded'' form ("bar=baz&foo=quux") sorted by key.
 	fmt.Println(c.Encode())      // id=1&method=get&method=put
 	fmt.Println(c.Get("method")) // get-只能获取到第一个元素
 
