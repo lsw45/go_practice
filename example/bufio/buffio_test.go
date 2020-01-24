@@ -188,10 +188,12 @@ func TestReadLine1(t *testing.T) {
 	br := bufio.NewReader(s)
 	for line, isPrefix, err := []byte{0}, false, error(nil); len(line) > 0 && err == nil; {
 		line, isPrefix, err = br.ReadLine()
-		// "123" false
-		// "zzz" false
-		// "" false EOF
 		fmt.Printf("%q %t %v\n", line, isPrefix, err)
+		/*
+			"123" false <nil>
+			"zzz" false <nil>
+			"" false EOF
+		*/
 	}
 }
 
@@ -276,14 +278,41 @@ func TestReadString1(t *testing.T) {
 	fmt.Printf("%s\n", line)
 }
 
+// bufio.Reader的WriteTo()和 bufio.Writer的ReadFrom()
+// WriteTo方法实现了io.WriterTo接口。
+// func (b *Reader) WriteTo(w io.Writer) (n int64, err error)
 func TestWriteTo1(t *testing.T) {
-	// WriteTo方法实现了io.WriterTo接口。
-	// func (b *Reader) WriteTo(w io.Writer) (n int64, err error)
+	b := bytes.NewBuffer(make([]byte, 0))
 	s := strings.NewReader("ABCDEFG")
 	br := bufio.NewReader(s)
-	b := bytes.NewBuffer(make([]byte, 0))
 	br.WriteTo(b)
-	fmt.Printf("%q\n", b) // "ABCDEFG"
+	fmt.Printf("%q\n", b)   // "ABCDEFG"
+	fmt.Println(string(65)) // A
+}
+
+// ReadFrom实现了io.ReaderFrom接口。
+// func (b *Writer) ReadFrom(r io.Reader) (n int64, err error)
+// ReadFrom无需使用Flush
+func TestReadFrom1(t *testing.T) {
+	s := strings.NewReader("hello world")
+	b := bytes.NewBuffer(make([]byte, 0))
+	bw := bufio.NewWriter(b)
+	bw.ReadFrom(s)
+	fmt.Println(b)
+}
+
+//go test -run=buffio_test.go -bench="." -benchtime="3s" -cpuprofile cpu.out
+// linux 是 -bench=.
+func BenchmarkReadFrom1(b *testing.B) {
+	b.ReportAllocs()
+	b.ResetTimer()
+	for idx := 0; idx < b.N; idx++ {
+		s := strings.NewReader("hello world")
+		b := bytes.NewBuffer(make([]byte, 0))
+		bw := bufio.NewWriter(b)
+		bw.ReadFrom(s)
+	}
+	b.StopTimer()
 }
 
 // Writer实现了为io.Writer接口对象提供缓冲。
@@ -328,7 +357,7 @@ func TestWrite1(t *testing.T) {
 	bw := bufio.NewWriter(b)
 	bw.Write(p[:])
 	bw.Flush()
-	fmt.Printf("%q\n", b)
+	fmt.Printf("%q\n", b) //"abc"
 }
 
 func TestWriteString1(t *testing.T) {
@@ -338,7 +367,7 @@ func TestWriteString1(t *testing.T) {
 	bw := bufio.NewWriter(b)
 	bw.WriteString("hello world")
 	bw.Flush()
-	fmt.Printf("%s\n", b)
+	fmt.Printf("%s\n", b) //hello world
 }
 
 func TestWriteByte1(t *testing.T) {
@@ -363,17 +392,6 @@ func TestWriteRune1(t *testing.T) {
 	fmt.Println(size) // 3
 	bw.Flush()
 	fmt.Println(b) // 周
-}
-
-func TestReadFrom1(t *testing.T) {
-	// ReadFrom实现了io.ReaderFrom接口。
-	// func (b *Writer) ReadFrom(r io.Reader) (n int64, err error)
-	// ReadFrom无需使用Flush
-	b := bytes.NewBuffer(make([]byte, 0))
-	s := strings.NewReader("hello world")
-	bw := bufio.NewWriter(b)
-	bw.ReadFrom(s)
-	fmt.Println(b)
 }
 
 func TestReadWriter1(t *testing.T) {
