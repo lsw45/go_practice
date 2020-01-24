@@ -257,7 +257,6 @@ func TestReadBytes1(t *testing.T) {
 		panic(err) // panic: EOF
 	}
 	fmt.Printf("%q\n", line)
-
 }
 
 func TestReadString1(t *testing.T) {

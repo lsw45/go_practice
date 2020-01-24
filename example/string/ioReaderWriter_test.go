@@ -100,6 +100,7 @@ func TestReader(t *testing.T) {
 	fmt.Println("New a multi-reader with 4 readers ...")
 	reader5 := io.MultiReader(reader5a, reader5b, reader5c, reader5d)
 	buf5 := make([]byte, 50)
+
 	for i := 0; i < 8; i++ {
 		n, err = reader5.Read(buf5)
 		executeIfNoErr(err, func() {
