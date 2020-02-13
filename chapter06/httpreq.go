@@ -23,6 +23,7 @@ func main() {
 
 	// 为标头添加信息
 	req.Header.Add("User-Agent", "myClient")
+	req.Header["user-a"][0] = "string"
 
 	// 开始请求
 	resp, err := client.Do(req)
