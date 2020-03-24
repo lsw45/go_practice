@@ -1,6 +1,9 @@
 package controllers
 
-import "github.com/astaxie/beego"
+import (
+	"fmt"
+	"github.com/astaxie/beego"
+)
 
 type MainController struct {
 	beego.Controller
@@ -11,6 +14,9 @@ func (c *MainController) ParamsKey() {
 	result["param id"] = c.Ctx.Input.Param(":id")
 	result["user id"] = c.Ctx.Input.Param(":user_id")
 	result["query id"] = c.Ctx.Input.Query("id")
-	c.Data["json"] = result
+
+	key := c.Ctx.Input.Params()
+	fmt.Printf("%+v", key)
+	c.Data["json"] = key
 	c.ServeJSON()
 }
