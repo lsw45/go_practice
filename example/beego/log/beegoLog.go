@@ -1,4 +1,4 @@
-package beego
+package log
 
 import (
 	"github.com/astaxie/beego/logs"

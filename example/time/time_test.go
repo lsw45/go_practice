@@ -9,6 +9,8 @@ import (
 )
 
 func TestIndex(t *testing.T) {
+	fmt.Println(time.Now().Format("20060102150405"))
+
 	var t11 time.Time
 	fmt.Println(t11)          //0001-01-01 00:00:00 +0000 UTC
 	fmt.Println(t11.IsZero()) //true
