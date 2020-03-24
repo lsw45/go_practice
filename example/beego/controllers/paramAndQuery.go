@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/astaxie/beego"
 )
 
@@ -16,7 +15,6 @@ func (c *MainController) ParamsKey() {
 	result["query id"] = c.Ctx.Input.Query("id")
 
 	key := c.Ctx.Input.Params()
-	fmt.Printf("%+v", key)
 	c.Data["json"] = key
 	c.ServeJSON()
 }
