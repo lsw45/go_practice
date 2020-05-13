@@ -67,8 +67,8 @@ func urlEncode() {
 		Next:  "/lingxi/platform/auth?",
 		AppID: "a.Base.App.Config().Sso.AppId",
 	}
-	form := url.Values{}
 
 	u.Add("orderNum", "recharge_19102520272923961")
+	u.Add("next", sso.Next)
 	fmt.Printf("%s\n", u.Encode())
 }

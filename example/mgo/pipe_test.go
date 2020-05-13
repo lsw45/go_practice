@@ -31,7 +31,7 @@ type LogPipe []struct {
 	// ID       bson.ObjectId `bson:"_id"`
 	Total    int      `bson:"total"`
 	Currency string   `bson:"_id"`
-	Year     int      `bson:"year`
+	Year     int      `bson:"year"`
 	Tags     []string `bson:"tags"`
 }
 
@@ -45,7 +45,7 @@ func TestPipe(t *testing.T) {
 	query := bson.M{"year": 2014}
 	// query["_id"] = 2
 
-	db.C(logCol).Pipe([]bson.M{
+	_ = db.C(logCol).Pipe([]bson.M{
 		{"$match": query},
 		{"$project": bson.M{"_id": 1, "total": 1, "tags": 1}},
 		{"group": bson.M{"$total": bson.M{"$sum": "$total"}}},
