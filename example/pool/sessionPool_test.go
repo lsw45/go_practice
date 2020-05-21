@@ -1,4 +1,4 @@
-package pool
+package pool_test
 
 import (
 	"github.com/CardInfoLink/tasty/redis"

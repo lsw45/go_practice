@@ -1,9 +1,8 @@
 package pool
 
 import (
-	"github.com/gorilla/mux"
+	"fmt"
 	"net"
-	"net/http"
 )
 
 type ConnRes interface {
@@ -16,20 +15,20 @@ type Pool struct {
 	factory Factory
 }
 
-func GetHttpPool() {
-	//con1, _ := DefaultHttpPool.newConn()
-	route := mux.NewRouter()
-	http.Handle("/lingxi", route)
-	server := &http.Server{Addr: "8080"}
-	_ = server.ListenAndServe()
+func ExampleGetHttpPool() {
 
-	con1 := DefaultHttpPool.Get()
-	_ = con1.Close()
 }
 
 var DefaultHttpPool = NewPool(func() (ConnRes, error) {
 	return net.Dial("tcp", ":8080")
 }, 10)
+
+func init() {
+	for i := 0; i < 10; i++ {
+		conn, _ := DefaultHttpPool.newConn()
+		DefaultHttpPool.Put(conn)
+	}
+}
 
 func NewPool(factory Factory, cap int) *Pool {
 	return &Pool{
@@ -48,7 +47,9 @@ func (p *Pool) Get() (conn ConnRes) {
 		{
 		}
 	default:
+		fmt.Println("the pool of conn is empty")
 		conn, _ = p.newConn()
+		p.conns <- conn
 	}
 	return
 }
