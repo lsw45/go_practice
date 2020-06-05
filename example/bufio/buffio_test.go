@@ -48,10 +48,11 @@ func TestPeek1(t *testing.T) {
 	// 该操作不会将数据读出，只是引用，引用的数据在下一次读取操作之
 	// 前是有效的。如果切片长度小于 n，则返回一个错误信息说明原因。
 	// 如果 n 大于缓存的总大小，则返回 ErrBufferFull。
+	// 看源码，缓存范围：16~4096
 	br := bufio.NewReader(s)
 
-	b, _ := br.Peek(5)
-	fmt.Printf("%q\n", b) // " basi"
+	b, _ := br.Peek(15)
+	fmt.Printf("%q\n", b) // " basic interfac"
 	b[0] = 'a'
 	b, _ = br.Peek(5)
 	fmt.Printf("%q\n", b) // "abasi"

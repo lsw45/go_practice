@@ -210,7 +210,7 @@ func (this *response) parserChunkedBody(body string) {
 	this.body = tmpBody[1]
 }
 
-//根据reqest对象的所有信息，拼装得到http请求头信息
+//根据request对象的所有信息，拼装得到http请求头信息
 func (this *Ch) getHttpHeader() (header string) {
 	header = ""
 	splitTag := "\r\n"
