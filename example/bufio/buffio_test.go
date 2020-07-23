@@ -286,8 +286,9 @@ func TestWriteTo1(t *testing.T) {
 	s := strings.NewReader("ABCDEFG")
 	br := bufio.NewReader(s)
 	br.WriteTo(b)
-	fmt.Printf("%q\n", b)   // "ABCDEFG"
-	fmt.Println(string(65)) // A
+	fmt.Printf("%s\n", b.String()) // ABCDEFG
+	fmt.Printf("%q\n", b)          // "ABCDEFG"
+	fmt.Println(string(65))        // A
 }
 
 // ReadFrom实现了io.ReaderFrom接口。
