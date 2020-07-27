@@ -1,8 +1,6 @@
 package http
 
 import (
-	"io"
-	"io/ioutil"
 	"net/http"
 	"testing"
 )
@@ -15,7 +13,7 @@ func TestReuseTcp(t *testing.T) {
 			panic(err)
 		}
 
-		io.Copy(ioutil.Discard, resp.Body) //必须将http.Response的Body读取完毕并且关闭后，才会重用TCP连接
+		//io.Copy(ioutil.Discard, resp.Body) //必须将http.Response的Body读取完毕并且关闭后，才会重用TCP连接
 		resp.Body.Close()
 	}
 }
