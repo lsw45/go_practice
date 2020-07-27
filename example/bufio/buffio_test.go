@@ -302,7 +302,7 @@ func TestReadFrom1(t *testing.T) {
 	fmt.Println(b)
 }
 
-//go test -run=buffio_test.go -bench="." -benchtime="3s" -cpuprofile cpu.out
+//go test -run=buffio_test.go -bench="BenchmarkReadFrom1" -benchtime="3s" -cpuprofile cpu.out
 // linux 是 -bench=.
 func BenchmarkReadFrom1(b *testing.B) {
 	b.ReportAllocs()
