@@ -18,7 +18,7 @@ func HttpDoTest(ctx context.Context, resChan chan<- string) error {
 	if err != nil {
 		return fmt.Errorf("http.NewRequest Error: %s", err.Error())
 	}
-
+	fmt.Printf("timestart:%s\n", ctx.Value("timestart"))
 	// in go >= 1.7
 	req = req.WithContext(ctx)
 
@@ -42,9 +42,10 @@ func HttpDoTest(ctx context.Context, resChan chan<- string) error {
 }
 
 func TestContext(t *testing.T) {
-	deadline := 1
+	deadline := 3
 	d := time.Now().Add(time.Duration(deadline) * time.Second) // deadline max
 	ctx, cancel := context.WithDeadline(context.Background(), d)
+	ctx = context.WithValue(ctx, "timestart", d)
 	defer cancel()
 
 	resChan := make(chan string)
