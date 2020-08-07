@@ -8,6 +8,8 @@ import (
 	"testing"
 )
 
+// GC只回收堆上的内存
+
 func TestTrace(t *testing.T) {
 	f, err := os.Create("trace.out")
 	if err != nil {
@@ -26,14 +28,17 @@ func TestTrace(t *testing.T) {
 var lastTotalFreed uint64
 var intMap map[int]int
 var intMapMap map[int]map[int]int
-var cnt = 8192
+var cnt = 1024 * 80
 
+// 先delete再nil
 func TestMapInit(t *testing.T) {
 	printMemStats() //Alloc = 119 TotalAlloc = 119  Just Freed = 0 Sys = 4868 NumGC = 0
 
 	initMap()
+
+	printMemStats() //Alloc = 481 TotalAlloc = 481  Just Freed = 0 Sys = 4868 NumGC = 0
 	runtime.GC()
-	printMemStats() //Alloc = 424 TotalAlloc = 484  Just Freed = 59 Sys = 5188 NumGC = 1
+	printMemStats() //Alloc = 423 TotalAlloc = 483  Just Freed = 60 Sys = 4932 NumGC = 1
 
 	log.Println(len(intMap)) //8192
 	for i := 0; i < cnt; i++ {
@@ -41,13 +46,42 @@ func TestMapInit(t *testing.T) {
 	}
 	log.Println(len(intMap)) //0
 
+	printMemStats() //Alloc = 424 TotalAlloc = 485  Just Freed = 0 Sys = 5188 NumGC = 1
 	runtime.GC()
-	printMemStats() //Alloc = 424 TotalAlloc = 485  Just Freed = 1 Sys = 5252 NumGC = 2
+	printMemStats() //Alloc = 423 TotalAlloc = 485  Just Freed = 1 Sys = 4996 NumGC = 2
 
 	intMap = nil
-	runtime.GC()
-	printMemStats() //Alloc = 111 TotalAlloc = 486  Just Freed = 313 Sys = 5252 NumGC = 3
 
+	printMemStats() //Alloc = 424 TotalAlloc = 486  Just Freed = 0 Sys = 5252 NumGC = 2
+	runtime.GC()
+	printMemStats() //Alloc = 111 TotalAlloc = 486  Just Freed = 313 Sys = 4996 NumGC = 3
+}
+
+// 先nil再delete
+func TestMapInitTwo(t *testing.T) {
+	printMemStats() //Alloc = 120 TotalAlloc = 120  Just Freed = 0 Sys = 4868 NumGC = 0
+
+	initMap()
+
+	printMemStats() //Alloc = 483 TotalAlloc = 483  Just Freed = 0 Sys = 6274 NumGC = 0
+	runtime.GC()
+	printMemStats() //Alloc = 424 TotalAlloc = 485  Just Freed = 60 Sys = 6338 NumGC = 1
+
+	intMap = nil
+
+	printMemStats() //Alloc = 425 TotalAlloc = 486  Just Freed = 0 Sys = 6338 NumGC = 1
+	runtime.GC()
+	printMemStats() //Alloc = 111 TotalAlloc = 486  Just Freed = 313 Sys = 6402 NumGC = 2
+
+	log.Println(len(intMap)) //0
+	for i := 0; i < cnt; i++ {
+		delete(intMap, i)
+	}
+	log.Println(len(intMap)) //0
+
+	printMemStats() //Alloc = 113 TotalAlloc = 487  Just Freed = 0 Sys = 6402 NumGC = 2
+	runtime.GC()
+	printMemStats() //Alloc = 111 TotalAlloc = 487  Just Freed = 1 Sys = 6402 NumGC = 3
 }
 
 func initMap() {
