@@ -15,8 +15,8 @@ func main() {
 	fmt.Printf("%+v\n", arr)
 
 	si := arr[:5]
-	fmt.Printf("%+v", si)
-	fmt.Println("%d", len(si))
+	fmt.Printf("%+v\n", si)
+	fmt.Printf("%d\n", len(si))
 
 	si = append(si, "Ruby", "Erlang")
 	fmt.Printf("%+v", si)
