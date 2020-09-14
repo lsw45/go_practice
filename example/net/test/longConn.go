@@ -78,6 +78,6 @@ func SenderTest(t *testing.T) {
 	}
 	client.Get()
 
-https: //blog.csdn.net/kdpujie/article/details/73177179
+	//https: //blog.csdn.net/kdpujie/article/details/73177179
 
 }
