@@ -16,37 +16,38 @@ import (
 )
 
 const (
-	ADDR     = "smtp.qiye.163.com:25"
-	HOST     = "smtp.qiye.163.com"
+	ADDR     = ""
+	HOST     = ""
 	USER     = "carey.li@cardinfolink.com"
-	PASSWORD = "carey.Li19940306"
+	PASSWORD = ""
 )
+
 var author = smtp.PlainAuth("", USER, PASSWORD, HOST)
 
-var user = []string{"webapp","webapp"}
-var password = []string{"",""}
+var user = []string{"webapp", "webapp"}
+var password = []string{"", ""}
 var publicKey = "F:/讯联/SecureCrtSSH/privateKey"
-var ipAdress = []string{"114.80.87.245:2","114.80.87.245:22"}
+var ipAdress = []string{""}
 var fileName = "./file.xlsx"
 
 func main() {
 	NumRunner := len(ipAdress)
 	sum := make(chan map[string]map[string]float64)
-	summary := make(map[string]map[string]float64,0)
+	summary := make(map[string]map[string]float64, 0)
 
 	var err error
 	var Client *ssh.Client
 	week := getWeekDay()
 
-	for k,ip :=range ipAdress{
-		go func (key int,adress string){
+	for k, ip := range ipAdress {
+		go func(key int, adress string) {
 			if user[key] == "" {
 				fmt.Printf("登录名为空：%s\n", adress)
 				return
 			}
 			if len(password) == 0 || password[key] == "" {
 				Client, err = dailPublic(user[key], publicKey, adress)
-			}else{
+			} else {
 				Client, err = dail(user[key], password[key], adress)
 			}
 			if err != nil {
@@ -56,17 +57,17 @@ func main() {
 			}
 			defer Client.Close()
 
-			ret := runCmd(Client,week)
-			sum<-summaryAll(ret)
-		}(k,ip)
+			ret := runCmd(Client, week)
+			sum <- summaryAll(ret)
+		}(k, ip)
 	}
 
 	ok := true
 	var item map[string]map[string]float64
-	for i:=0;i<NumRunner;i++ {
-	 	item, ok = <-sum
-		if !ok{
-			fmt.Printf("channel has been closed:%v\n",ok)
+	for i := 0; i < NumRunner; i++ {
+		item, ok = <-sum
+		if !ok {
+			fmt.Printf("channel has been closed:%v\n", ok)
 			return
 		}
 		for week, val := range item {
@@ -83,27 +84,27 @@ func main() {
 
 	//写excel
 	file := xlsx.NewFile()
-	file,err = writeExcel(file,summary,week)
-	if err != nil{
+	file, err = writeExcel(file, summary, week)
+	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	err = file.Save(fileName)
-	if err != nil{
+	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	err = sendEmail(fileName,week)
-	if err != nil{
+	err = sendEmail(fileName, week)
+	if err != nil {
 		fmt.Println(err)
 	}
 }
 
-func subStrValue(str,find,tag string)string{
-	index := strings.Index(str,find)
-	temp:=strings.Index(str[index:],tag)
-	return strings.TrimRight(fmt.Sprintln(str[index+len(find):index+temp]),"\n")
+func subStrValue(str, find, tag string) string {
+	index := strings.Index(str, find)
+	temp := strings.Index(str[index:], tag)
+	return strings.TrimRight(fmt.Sprintln(str[index+len(find):index+temp]), "\n")
 }
 func dail(user, password, ipAdress string) (*ssh.Client, error) {
 	PassWd := []ssh.AuthMethod{ssh.Password(password)}
@@ -123,12 +124,12 @@ func dailPublic(user, publicKey, ipAdress string) (*ssh.Client, error) {
 	signer, err := readPrivateKey(publicKey)
 	if err != nil {
 		fmt.Println(err)
-		return nil,err
+		return nil, err
 	}
 
 	Conf := ssh.ClientConfig{
 		User: user,
-		Auth:  []ssh.AuthMethod{ssh.PublicKeys(signer)},
+		Auth: []ssh.AuthMethod{ssh.PublicKeys(signer)},
 		HostKeyCallback: func(hostname string, remote net.Addr, key ssh.PublicKey) error {
 			return nil
 		},
@@ -151,12 +152,12 @@ func getWeekDay() []string {
 	now := time.Now()
 	weekDay := []string{}
 	startDate := now.Add(-time.Duration(now.Weekday()-1+7) * time.Hour * 24)
-	for i:=0;i<7;i++{
-		weekDay = append(weekDay,startDate.Add(time.Duration(i) * time.Hour * 24).Format("20060102"))
+	for i := 0; i < 7; i++ {
+		weekDay = append(weekDay, startDate.Add(time.Duration(i)*time.Hour*24).Format("20060102"))
 	}
 	return weekDay
 }
-func writeExcel(file *xlsx.File, data map[string]map[string]float64,sortKey []string) (*xlsx.File, error) {
+func writeExcel(file *xlsx.File, data map[string]map[string]float64, sortKey []string) (*xlsx.File, error) {
 	var row *xlsx.Row
 	if len(data) > 0 {
 		sheet, err := file.AddSheet("Sheet1")
@@ -170,23 +171,23 @@ func writeExcel(file *xlsx.File, data map[string]map[string]float64,sortKey []st
 		row.AddCell().Value = "积分数量"
 
 		for _, key := range sortKey {
-			if len(data[key])>0{
+			if len(data[key]) > 0 {
 				stat := data[key]
 				row = sheet.AddRow()
 				row.AddCell().Value = key
-				row.AddCell().Value = fmt.Sprintf("%.2f",stat["amount"])
-				row.AddCell().Value = fmt.Sprintf("%v",stat["count"])
-				row.AddCell().Value = fmt.Sprintf("%.2f",stat["score"])
+				row.AddCell().Value = fmt.Sprintf("%.2f", stat["amount"])
+				row.AddCell().Value = fmt.Sprintf("%v", stat["count"])
+				row.AddCell().Value = fmt.Sprintf("%.2f", stat["score"])
 			}
 		}
 	}
 
 	return file, nil
 }
-func runCmd(Client *ssh.Client,week []string) (ret map[string]string) {
-	ret = make(map[string]string,0)
-	for _,v := range week{
-		cmd := fmt.Sprintf("grep 'ConsumeScore req:' /opt/angrycard/logs/angrycard.log.%s",v)
+func runCmd(Client *ssh.Client, week []string) (ret map[string]string) {
+	ret = make(map[string]string, 0)
+	for _, v := range week {
+		cmd := fmt.Sprintf("grep 'ConsumeScore req:' /opt/angrycard/logs/angrycard.log.%s", v)
 
 		session, err := Client.NewSession()
 		if err != nil {
@@ -197,12 +198,12 @@ func runCmd(Client *ssh.Client,week []string) (ret map[string]string) {
 		session.Stdout = &stdOut
 		session.Stderr = &stdErr
 		err = session.Run(cmd)
-		if err !=nil && strings.Contains(err.Error(),"Process exited with status 1"){
+		if err != nil && strings.Contains(err.Error(), "Process exited with status 1") {
 			ret[v] = ""
 			continue
-		}else if err != nil {
+		} else if err != nil {
 			return
-		}else{
+		} else {
 			ss := strings.Replace(stdOut.String(), "\n", "", -1)
 			ret[v] = ss
 		}
@@ -210,14 +211,14 @@ func runCmd(Client *ssh.Client,week []string) (ret map[string]string) {
 	}
 	return ret
 }
-func summaryAll(ret map[string]string)(summary map[string]map[string]float64){
-	var score,count,pay float64 = 0,0,0
-	summary = make(map[string]map[string]float64,0)
+func summaryAll(ret map[string]string) (summary map[string]map[string]float64) {
+	var score, count, pay float64 = 0, 0, 0
+	summary = make(map[string]map[string]float64, 0)
 	var sli85 map[string]string
 	var sli79 map[string]string
-	split,str85,str79 := "func=mallcoo.(*api).ConsumeScore","consumeScore.go:85","consumeScore.go:79"
-	findScore,findPay,findSuc := "\"Score\":","PayAmount:","\"Message\":\"成功\""
-	for k,v := range ret {
+	split, str85, str79 := "func=mallcoo.(*api).ConsumeScore", "consumeScore.go:85", "consumeScore.go:79"
+	findScore, findPay, findSuc := "\"Score\":", "PayAmount:", "\"Message\":\"成功\""
+	for k, v := range ret {
 		if v != "" {
 			sli := strings.Split(v, split)
 			p := len(sli)
@@ -226,51 +227,51 @@ func summaryAll(ret map[string]string)(summary map[string]map[string]float64){
 				sli[i], sli[j] = sli[j], sli[i]
 			}
 
-			i:=0
-			count,score,pay = 0,0,0
-			sli85 = make(map[string]string,0)
-			sli79 = make(map[string]string,0)
-			for{
-				if index85 := strings.Index(sli[i], str85);index85 != -1 {
-					if indexSuc := strings.Index(sli[i], findSuc);indexSuc != -1 {
+			i := 0
+			count, score, pay = 0, 0, 0
+			sli85 = make(map[string]string, 0)
+			sli79 = make(map[string]string, 0)
+			for {
+				if index85 := strings.Index(sli[i], str85); index85 != -1 {
+					if indexSuc := strings.Index(sli[i], findSuc); indexSuc != -1 {
 						val := subStrValue(sli[i], findScore, ",")
-						temp,err := strconv.ParseFloat(val,10)
-						if err != nil{
-							fmt.Printf("85 ParseFloat err:%s\n",err)
+						temp, err := strconv.ParseFloat(val, 10)
+						if err != nil {
+							fmt.Printf("85 ParseFloat err:%s\n", err)
 							return
 						}
 						sli85[sli[i][39:39+7]] = "1"
 						count++
 						score += temp
 					}
-				} else if index79 := strings.Index(sli[i], str79);index79 != -1{
+				} else if index79 := strings.Index(sli[i], str79); index79 != -1 {
 					sli79[sli[i][39:39+7]] = sli[i]
 				}
 				i++
-				if i>p-1{
+				if i > p-1 {
 					break
 				}
 			}
-			for k1,_:= range sli85 {
-				if len(sli79[k1])!=0{
+			for k1, _ := range sli85 {
+				if len(sli79[k1]) != 0 {
 					val := subStrValue(sli79[k1], findPay, " ")
-					temp,err := strconv.ParseFloat(val,10)
-					if err != nil{
-						fmt.Printf("79 ParseFloat err:%s\n",err)
+					temp, err := strconv.ParseFloat(val, 10)
+					if err != nil {
+						fmt.Printf("79 ParseFloat err:%s\n", err)
 						return
 					}
 					pay += temp
 				}
 			}
-			summary[k] = map[string]float64{"score":score,"amount":pay,"count":count}
-		}else{
-			summary[k] = map[string]float64{"score":0,"amount":0,"count":0}
+			summary[k] = map[string]float64{"score": score, "amount": pay, "count": count}
+		} else {
+			summary[k] = map[string]float64{"score": 0, "amount": 0, "count": 0}
 		}
 	}
 
 	return summary
 }
-func sendEmail(file string,week []string) error {
+func sendEmail(file string, week []string) error {
 	emailbody := `
 <html>
 <body>
@@ -289,19 +290,19 @@ func sendEmail(file string,week []string) error {
 
 	em := email.NewEmail()
 	em.From = USER
-	em.Subject = fmt.Sprintf("吾悦广场支付宝会员卡推广情况%s-%s",week[0],week[6])
-	em.HTML = []byte(fmt.Sprintf(emailbody,date)) // Content-Type: text/html
+	em.Subject = fmt.Sprintf("吾悦广场支付宝会员卡推广情况%s-%s", week[0], week[6])
+	em.HTML = []byte(fmt.Sprintf(emailbody, date)) // Content-Type: text/html
 	//em.Cc = stringArray 抄送人
 
 	drive := os.Getenv("OneDrive")
-	if strings.Contains(drive,"carey.li"){
+	if strings.Contains(drive, "carey.li") {
 		em.To = []string{"carey.li@cardinfolink.com"}
-	}else{
-		em.To = []string{"chinson.liu@cardinfolink.com","wady.wang@cardinfolink.com","joe.luo@cardinfolink.com","carey.li@cardinfolink.com","wanny.wang@cardinfolink.com","harry.wang@cardinfolink.com"}
+	} else {
+		em.To = []string{"chinson.liu@cardinfolink.com", "wady.wang@cardinfolink.com", "joe.luo@cardinfolink.com", "carey.li@cardinfolink.com", "wanny.wang@cardinfolink.com", "harry.wang@cardinfolink.com"}
 	}
 
-	fileR,err := os.Open(file)
-	em.Attach(fileR, "StatisticalReport.xlsx","")
+	fileR, err := os.Open(file)
+	em.Attach(fileR, "StatisticalReport.xlsx", "")
 
 	err = em.Send(ADDR, author)
 	if err != nil {
